@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Journal Scolaire — Accueil</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Serif+Display&family=DM+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-main:      #0f1117;
+    --bg-card:      #181c27;
+    --bg-card2:     #1e2332;
+    --text-main:    #e2e8f0;
+    --text-muted:   #7c8899;
+    --text-muted2:  #4a5568;
+    --border-color: #2a3047;
+
+    --clr-accent:   #e8b84b;
+    --clr-accent2:  #4b8fe8;
+    --clr-green:    #3ecf8e;
+    --clr-orange:   #f0883e;
+    --clr-red:      #f85149;
+
+    --clr-bg:       var(--bg-main);
+    --clr-surface:  var(--bg-card);
+    --clr-surface2: var(--bg-card2);
+    --clr-border:   var(--border-color);
+    --clr-text:     var(--text-main);
+    --clr-muted:    var(--text-muted);
+    --clr-muted2:   var(--text-muted2);
+  }
+
+  html.light-mode {
+    --bg-main:      #f8fafc;
+    --bg-card:      #ffffff;
+    --bg-card2:     #f1f5f9;
+    --text-main:    #0f172a;
+    --text-muted:   #1e293b;
+    --text-muted2:  #64748b;
+    --border-color: #d8dce3;
+    --clr-accent:   #b8791f;
+    --clr-accent2:  #2f6fd1;
+    --clr-green:    #15803d;
+    --clr-orange:   #c2660a;
+    --clr-red:      #dc2626;
+  }
+
+  * { box-sizing: border-box; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+
+  html { touch-action: manipulation; }
+
+  body {
+    margin: 0;
+    background: var(--bg-main);
+    color: var(--text-main);
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3 { font-family: 'DM Serif Display', Georgia, 'Times New Roman', serif; margin: 0; }
+
+  body, .panel, .app-header, .modal-overlay, .stat-card, .tab-nav, .level-card, .class-card {
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+
+  /* ── Header ── */
+  .app-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 32px;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border-color);
+  }
+  .app-header .brand { display: flex; align-items: center; gap: 12px; }
+  .app-header .brand .logo-mark {
+    width: 38px; height: 38px; border-radius: 10px;
+    background: var(--clr-accent);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', serif; font-size: 19px; color: #0f1117;
+  }
+  .app-header .brand-text h1 { font-size: 20px; color: var(--text-main); }
+  .app-header .brand-text .sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+  /* ── Layout ── */
+  .container { max-width: 1080px; margin: 0 auto; padding: 44px 24px 80px; }
+
+  .hero { text-align: center; margin-bottom: 40px; }
+  .hero h2 { font-size: 34px; color: var(--text-main); margin-bottom: 10px; }
+  .hero p { color: var(--text-muted); font-size: 14px; max-width: 480px; margin: 0 auto; }
+
+  /* ── Boutons ── */
+  .btn {
+    border: none; cursor: pointer;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600; font-size: 13px;
+    padding: 9px 18px;
+    transition: all 0.3s ease-out;
+    display: inline-flex; align-items: center; gap: 7px;
+    will-change: transform;
+  }
+  .btn:active { transform: translateY(0) scale(0.98); }
+
+  .btn-primary { background: var(--clr-accent); color: #0f1117; }
+  .btn-primary:hover { background: #d4a030; transform: translateY(-2px) scale(1.02); box-shadow: 0 8px 20px rgba(232,184,75,0.25); }
+
+  .btn-secondary { background: var(--clr-surface2); color: var(--clr-text); border: 1px solid var(--clr-border); }
+  .btn-secondary:hover { border-color: var(--clr-accent); color: var(--clr-accent); transform: translateY(-2px) scale(1.02); box-shadow: 0 8px 20px rgba(232,184,75,0.12); }
+
+  .btn-danger { background: rgba(248,81,73,0.15); color: var(--clr-red); border: 1px solid rgba(248,81,73,0.3); }
+  .btn-danger:hover { background: rgba(248,81,73,0.25); transform: translateY(-2px) scale(1.02); box-shadow: 0 8px 20px rgba(248,81,73,0.18); }
+
+  .btn-green { background: var(--clr-green); color: #0f1117; }
+  .btn-green:hover { background: #2db87d; transform: translateY(-2px) scale(1.02); box-shadow: 0 8px 20px rgba(62,207,142,0.25); }
+  .btn-danger { background: transparent; color: var(--clr-red); border: 1px solid var(--clr-red); }
+  .btn-danger:hover { background: rgba(248,81,73,0.12); transform: translateY(-2px) scale(1.02); box-shadow: 0 8px 20px rgba(248,81,73,0.15); }
+  .action-stack { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
+  .action-stack .btn { width: 100%; justify-content: center; }
+
+  .roster-list { max-height: 240px; overflow-y: auto; margin-bottom: 8px; display: flex; flex-direction: column; gap: 6px; }
+  .roster-list-item {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--bg-card2); border: 1px solid var(--border-color);
+    border-radius: 8px; padding: 8px 10px;
+  }
+  .roster-list-item .roster-name { font-size: 13px; color: var(--text-main); }
+  .roster-list-item .roster-badge { font-size: 10px; color: var(--clr-accent2); margin-left: 8px; }
+  .roster-empty { font-size: 12px; color: var(--text-muted); padding: 10px 2px; }
+
+  .btn-sm { padding: 5px 10px; font-size: 12px; }
+
+  /* Bouton mode clair/sombre */
+  .theme-toggle {
+    width: 38px; height: 38px; border-radius: 8px;
+    background: var(--clr-surface2); border: 1px solid var(--clr-border);
+    cursor: pointer; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s ease-out;
+  }
+  .theme-toggle:hover { border-color: var(--clr-accent); transform: translateY(-2px) scale(1.02); }
+
+  /* ── Grille des niveaux (page d'accueil) ── */
+  .level-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  @media (max-width: 720px) { .level-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 460px) { .level-grid { grid-template-columns: 1fr; } }
+
+  .level-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 26px 20px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    text-align: left;
+  }
+  .level-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--clr-accent);
+  }
+  .level-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(232,184,75,0.15);
+    border-color: var(--clr-accent);
+  }
+  .level-card .level-code {
+    font-family: 'DM Serif Display', serif;
+    font-size: 30px;
+    color: var(--text-main);
+    line-height: 1;
+  }
+  .level-card .level-name {
+    font-size: 12px; color: var(--text-muted);
+    margin-top: 8px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600;
+  }
+  .level-card .level-count {
+    margin-top: 14px; font-size: 12px; color: var(--clr-accent2); font-weight: 600;
+  }
+
+  /* ── Vue "classes" ── */
+  .view { display: none; }
+  .view.active { display: block; }
+
+  .breadcrumb {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 26px;
+  }
+  .breadcrumb .back-btn {
+    background: var(--clr-surface2); border: 1px solid var(--clr-border);
+    color: var(--text-main); border-radius: 8px; padding: 7px 12px;
+    cursor: pointer; font-size: 13px; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: all 0.3s ease-out;
+  }
+  .breadcrumb .back-btn:hover { border-color: var(--clr-accent); color: var(--clr-accent); transform: translateY(-2px); }
+  .breadcrumb .crumb-label { color: var(--text-muted); font-size: 13px; }
+  .breadcrumb .crumb-current { color: var(--clr-accent); font-weight: 700; font-size: 13px; }
+
+  .view-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 24px; flex-wrap: wrap; gap: 14px;
+  }
+  .view-header h2 { font-size: 28px; }
+  .view-header .view-sub { color: var(--text-muted); font-size: 13px; margin-top: 6px; }
+
+  /* Stat cards */
+  .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 28px; }
+  .stats-row-2 { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 640px) { .stats-row { grid-template-columns: 1fr; } }
+  .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+  .stat-card.gold::before  { background: var(--clr-accent); }
+  .stat-card.blue::before  { background: var(--clr-accent2); }
+  .stat-card.green::before { background: var(--clr-green); }
+  .stat-card.red::before   { background: var(--clr-red); }
+  .stat-label { font-size: 11px; color: var(--clr-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+  .stat-value { font-family: 'DM Serif Display', serif; font-size: 28px; line-height: 1; margin: 8px 0 4px; }
+  .stat-sub   { font-size: 12px; color: var(--clr-muted); margin-top: 4px; }
+
+  /* Panel classes */
+  .panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 22px;
+  }
+  .panel-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 18px; flex-wrap: wrap; gap: 12px;
+  }
+  .panel-header h3 { font-size: 16px; font-family: 'DM Sans', sans-serif; font-weight: 700; }
+
+  .class-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 14px;
+  }
+
+  .class-card {
+    background: var(--bg-card2);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 16px;
+    position: relative;
+    cursor: pointer;
+  }
+  .class-card:hover { border-color: var(--clr-accent); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(232,184,75,0.1); }
+  .class-card .class-name { font-family: 'DM Mono', ui-monospace, 'SF Mono', Consolas, monospace; font-size: 15px; font-weight: 700; color: var(--text-main); }
+  .class-card .class-meta { font-size: 11px; color: var(--text-muted); margin-top: 6px; }
+  .class-card .class-remove {
+    position: absolute; top: 8px; right: 8px;
+    width: 22px; height: 22px; border-radius: 6px;
+    background: transparent; border: none; color: var(--text-muted2);
+    cursor: pointer; font-size: 13px; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s ease-out;
+  }
+  .class-card .class-remove:hover { background: rgba(248,81,73,0.15); color: var(--clr-red); }
+
+  /* ── Liste des classes façon boutons empilés ── */
+  .class-list { display: flex; flex-direction: column; gap: 10px; }
+  .class-list-item {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    width: 100%;
+    background: var(--bg-card2);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all 0.25s ease-out;
+  }
+  .class-list-item:hover { border-color: var(--clr-accent); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(232,184,75,0.1); }
+  .class-list-item .class-list-main { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; }
+  .class-list-item .class-name { font-family: 'DM Mono', ui-monospace, 'SF Mono', Consolas, monospace; font-size: 15px; font-weight: 700; color: var(--text-main); }
+  .class-list-item .class-meta { font-size: 11px; color: var(--text-muted); }
+  .class-list-item .class-list-arrow { font-size: 15px; color: var(--text-muted2); flex-shrink: 0; }
+  .class-list-item .class-remove {
+    width: 26px; height: 26px; border-radius: 6px; flex-shrink: 0;
+    background: transparent; border: none; color: var(--text-muted2);
+    cursor: pointer; font-size: 13px; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s ease-out;
+  }
+  .class-list-item .class-remove:hover { background: rgba(248,81,73,0.15); color: var(--clr-red); }
+
+  .btn-block { width: 100%; justify-content: center; margin-top: 18px; }
+
+  .empty-state {
+    text-align: center; padding: 40px 20px; color: var(--text-muted);
+  }
+  .empty-state .empty-icon { font-size: 30px; margin-bottom: 10px; }
+  .empty-state p { font-size: 13px; }
+
+  /* ── Modal (ajout de classe) ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.55);
+    align-items: center; justify-content: center;
+    z-index: 50; padding: 20px;
+  }
+  .modal-overlay.active { display: flex; }
+  #confirmModalOverlay { z-index: 100; }
+  .modal-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 26px; width: 100%; max-width: 380px;
+  }
+  .modal-box h3 { font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .modal-box .modal-sub { font-size: 12px; color: var(--text-muted); margin-bottom: 18px; }
+  .modal-box input {
+    width: 100%; background: var(--bg-card2); border: 1px solid var(--border-color);
+    border-radius: 8px; padding: 10px 12px; color: var(--text-main);
+    font-family: 'DM Mono', monospace; font-size: 16px; margin-bottom: 18px;
+  }
+  .modal-box input:focus { outline: none; border-color: var(--clr-accent); }
+  .modal-actions { display: flex; justify-content: flex-end; gap: 10px; }
+
+  /* ── Tableau de données (design system §7) ── */
+  .data-table { width: 100%; border-collapse: collapse; }
+  .data-table th {
+    background: var(--bg-card2);
+    color: var(--text-muted);
+    font-size: 10px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.07em;
+    padding: 10px 12px; text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    white-space: nowrap;
+  }
+  .data-table td {
+    color: var(--text-main);
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: var(--bg-card2); }
+  .data-table .idx-cell { color: var(--text-muted); font-family: 'DM Mono', monospace; font-size: 12px; width: 36px; }
+  .data-table .name-cell { font-weight: 600; }
+
+  /* ── Chips de statut (présences) ── */
+  .status-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .status-chip {
+    border: 1px solid var(--clr-border);
+    background: transparent;
+    color: var(--text-muted);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px; font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+  }
+  .status-chip:hover { transform: translateY(-1px); }
+  .status-chip[data-status="Présent"].active     { background: rgba(62,207,142,0.15);  color: var(--clr-green);   border-color: rgba(62,207,142,0.4); }
+  .status-chip[data-status="Absent"].active      { background: rgba(248,81,73,0.15);   color: var(--clr-red);     border-color: rgba(248,81,73,0.4); }
+  .status-chip[data-status="Dispensé"].active    { background: rgba(75,143,232,0.15);  color: var(--clr-accent2); border-color: rgba(75,143,232,0.4); }
+  .status-chip[data-status="Sans tenue"].active  { background: rgba(240,136,62,0.15);  color: var(--clr-orange);  border-color: rgba(240,136,62,0.4); }
+  .status-chip[data-status="Malade"].active      { background: rgba(232,184,75,0.18);  color: var(--clr-accent);  border-color: rgba(232,184,75,0.4); }
+
+  /* ── Sous-choix Présent/Absent pour un élève Dispensé ── */
+  .dispense-subrow { display: flex; align-items: center; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+  .dispense-subrow .dispense-label { font-size: 11px; color: var(--text-muted); }
+  .dispense-chip {
+    font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600;
+    padding: 5px 10px; border-radius: 999px; cursor: pointer;
+    background: var(--bg-card2); color: var(--text-muted);
+    border: 1px solid var(--border-color); transition: all 0.15s ease-out;
+  }
+  .dispense-chip:hover { transform: translateY(-1px); }
+  .dispense-chip[data-att="Présent"].active { background: rgba(62,207,142,0.15); color: var(--clr-green); border-color: rgba(62,207,142,0.4); }
+  .dispense-chip[data-att="Absent"].active  { background: rgba(248,81,73,0.15);  color: var(--clr-red);   border-color: rgba(248,81,73,0.4); }
+
+  .status-pill {
+    display: inline-block; border-radius: 6px; padding: 2px 8px;
+    font-size: 11px; font-weight: 700; border: 1px solid transparent;
+  }
+  .status-pill.st-Présent     { background: rgba(62,207,142,0.15);  color: var(--clr-green);   border-color: rgba(62,207,142,0.3); }
+  .status-pill.st-Absent      { background: rgba(248,81,73,0.15);   color: var(--clr-red);     border-color: rgba(248,81,73,0.3); }
+  .status-pill.st-Dispensé    { background: rgba(75,143,232,0.15);  color: var(--clr-accent2); border-color: rgba(75,143,232,0.3); }
+  .status-pill.st-Sans_tenue  { background: rgba(240,136,62,0.15);  color: var(--clr-orange);  border-color: rgba(240,136,62,0.3); }
+  .status-pill.st-Malade      { background: rgba(232,184,75,0.18);  color: var(--clr-accent);  border-color: rgba(232,184,75,0.3); }
+
+  /* ── Bandeau d'en-tête de session ── */
+  .session-banner {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px; margin-bottom: 18px;
+  }
+  .session-banner .session-tag {
+    font-family: 'DM Mono', monospace; font-size: 12px; color: var(--clr-accent);
+    background: rgba(232,184,75,0.12); border: 1px solid rgba(232,184,75,0.3);
+    border-radius: 6px; padding: 4px 10px; font-weight: 700;
+  }
+
+  .focus-toggle-row { display: flex; justify-content: center; margin-top: 20px; }
+
+  /* ── Mode Focus (saisie un par un) ── */
+  .focus-mode { display: none; text-align: center; padding: 30px 10px 10px; }
+  .focus-mode.active { display: block; }
+  .focus-mode .focus-progress {
+    font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text-muted);
+    margin-bottom: 18px; letter-spacing: 0.04em;
+  }
+  .focus-mode .focus-name {
+    font-family: 'DM Serif Display', serif; font-size: 32px; color: var(--text-main);
+    margin-bottom: 22px;
+  }
+  .focus-mode .focus-chips {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 28px;
+  }
+  .focus-mode .status-chip.focus-chip { font-size: 13px; padding: 9px 16px; border-radius: 8px; }
+  .focus-mode .focus-actions { display: flex; justify-content: center; gap: 12px; }
+
+  /* ── Modal large (ajout de classe avec import élèves) ── */
+  .modal-box.wide { max-width: 460px; }
+  .modal-box textarea {
+    width: 100%; background: var(--bg-card2); border: 1px solid var(--border-color);
+    border-radius: 8px; padding: 10px 12px; color: var(--text-main);
+    font-family: 'DM Mono', monospace; font-size: 16px;
+    resize: vertical; min-height: 110px; margin-bottom: 6px;
+  }
+  .modal-box textarea:focus { outline: none; border-color: var(--clr-accent); }
+  .import-divider {
+    display: flex; align-items: center; gap: 10px;
+    color: var(--text-muted2); font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.06em; font-weight: 700; margin: 4px 0 12px;
+  }
+  .import-divider::before, .import-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--border-color);
+  }
+  .import-hint { font-size: 11px; color: var(--text-muted); margin: -2px 0 16px; }
+  .import-count { font-size: 11px; color: var(--clr-green); margin: -2px 0 16px; font-weight: 600; }
+
+  /* ── Vue historique des leçons ── */
+  .lesson-row-num {
+    font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--clr-accent);
+  }
+  .lesson-row-date { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text-muted); }
+  .lesson-open-btn { padding: 5px 12px; font-size: 12px; }
+
+  ::selection { background: rgba(232,184,75,0.3); }
+
+  /* ── Impression de la fiche de suivi ── */
+  #printArea {
+    display: none;
+    background: #fff;
+    color: #111;
+    font-family: Arial, Helvetica, sans-serif;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  body.is-printing > *:not(#printArea) { display: none !important; }
+  body.is-printing #printArea { display: block !important; }
+  @page { size: A4 landscape; margin: 10mm; }
+  @media print {
+    body.is-printing #printArea table { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div id="printArea"></div>
+
+<header class="app-header">
+  <div class="brand">
+    <div class="logo-mark">J</div>
+    <div class="brand-text">
+      <h1>Journal Scolaire</h1>
+      <div class="sub">Sélection du niveau et gestion des classes</div>
+    </div>
+  </div>
+  <button class="theme-toggle" id="themeToggle" title="Basculer le mode clair/sombre">🌙</button>
+</header>
+
+<div class="container">
+
+  <!-- ── VUE 1 : ACCUEIL / SÉLECTION DU NIVEAU ── -->
+  <div class="view active" id="view-home">
+    <div class="hero">
+      <h2>Choisissez un niveau</h2>
+      <p>Sélectionnez le niveau scolaire pour gérer les classes du journal.</p>
+    </div>
+    <div class="level-grid" id="levelGrid"></div>
+  </div>
+
+  <!-- ── VUE 2 : GESTION DES CLASSES D'UN NIVEAU ── -->
+  <div class="view" id="view-classes">
+    <div class="breadcrumb">
+      <button class="back-btn" id="backBtn">← Retour</button>
+      <span class="crumb-label">Niveaux /</span>
+      <span class="crumb-current" id="crumbCurrent">—</span>
+    </div>
+
+    <div class="view-header">
+      <div>
+        <h2 id="levelTitle">—</h2>
+        <div class="view-sub" id="levelSub">Gestion des classes de ce niveau</div>
+      </div>
+    </div>
+
+    <div class="stats-row stats-row-2">
+      <div class="stat-card gold">
+        <div class="stat-label">Classes créées</div>
+        <div class="stat-value" id="statCount">0</div>
+        <div class="stat-sub">pour ce niveau</div>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-label">Niveau actif</div>
+        <div class="stat-value" id="statLevel">—</div>
+        <div class="stat-sub">code niveau</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <h3>Classes du niveau</h3>
+      </div>
+      <div class="class-list" id="classGrid"></div>
+      <div class="empty-state" id="emptyState" style="display:none;">
+        <div class="empty-icon">🗂️</div>
+        <p>Aucune classe pour ce niveau pour l'instant. Ajoutez-en une pour commencer.</p>
+      </div>
+      <button class="btn btn-primary btn-block" id="openAddModal">✚ Ajouter une classe</button>
+    </div>
+  </div>
+
+  <!-- ── VUE 3 : HISTORIQUE DES LEÇONS D'UNE CLASSE ── -->
+  <div class="view" id="view-lessons">
+    <div class="breadcrumb">
+      <button class="back-btn" id="backToClassesFromLessonsBtn">← Retour aux classes</button>
+      <span class="crumb-label">Niveaux / <span id="crumbLevelLessons">—</span> /</span>
+      <span class="crumb-current" id="crumbClassLessons">—</span>
+    </div>
+
+    <div class="view-header">
+      <div>
+        <h2 id="lessonsClassTitle">—</h2>
+        <div class="view-sub" id="lessonsSub">Historique des leçons enregistrées</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <button class="btn btn-secondary" id="editStudentsBtn">✏️ Modifier les élèves</button>
+        <button class="btn btn-secondary" id="printSheetBtn">🖨️ Imprimer</button>
+        <button class="btn btn-primary" id="newLessonBtn">✚ Nouvelle leçon</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <h3>Leçons enregistrées</h3>
+      </div>
+      <table class="data-table" id="lessonsTable">
+        <thead>
+          <tr>
+            <th>N°</th>
+            <th>Date</th>
+            <th>Présents</th>
+            <th>Absents</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="lessonsTbody"></tbody>
+      </table>
+      <div class="empty-state" id="lessonsEmptyState" style="display:none;">
+        <div class="empty-icon">📚</div>
+        <p>Aucune leçon enregistrée pour cette classe. Cliquez sur "✚ Nouvelle leçon" pour commencer.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── VUE 4 : PRÉSENCES D'UNE CLASSE / LEÇON ── -->
+  <div class="view" id="view-attendance">
+    <div class="breadcrumb">
+      <button class="back-btn" id="backToClassesBtn">← Retour à l'historique</button>
+      <span class="crumb-label">Niveaux / <span id="crumbLevelAtt">—</span> / <span id="crumbClassAtt2">—</span> /</span>
+      <span class="crumb-current" id="crumbClassAtt">—</span>
+    </div>
+
+    <div class="session-banner">
+      <div>
+        <h2 id="attClassTitle">—</h2>
+        <div class="view-sub" id="attDateSub">Feuille de présence de la classe</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span class="session-tag" id="sessionTag">Leçon —</span>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card green">
+        <div class="stat-label">Présents</div>
+        <div class="stat-value" id="statPresent">0</div>
+        <div class="stat-sub">élèves présents</div>
+      </div>
+      <div class="stat-card red">
+        <div class="stat-label">Absents</div>
+        <div class="stat-value" id="statAbsent">0</div>
+        <div class="stat-sub">élèves absents</div>
+      </div>
+      <div class="stat-card gold">
+        <div class="stat-label">Effectif total</div>
+        <div class="stat-value" id="statTotal">0</div>
+        <div class="stat-sub">élèves inscrits</div>
+      </div>
+    </div>
+
+    <!-- Vue tableau (par défaut) -->
+    <div class="panel" id="tablePanel">
+      <div class="panel-header">
+        <h3>Liste des élèves</h3>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th class="idx-cell">#</th>
+            <th>Élève</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
+        <tbody id="attendanceTbody"></tbody>
+      </table>
+
+      <div class="focus-toggle-row action-stack">
+        <button class="btn btn-primary" id="startFocusBtn">▶ Start (Saisie un par un)</button>
+        <button class="btn btn-green" id="saveLessonBtn">💾 Sauvegarder</button>
+        <button class="btn btn-danger" id="deleteClassBtn">🗑️ Supprimer la classe</button>
+      </div>
+    </div>
+
+    <!-- Mode Focus (saisie un par un) -->
+    <div class="panel focus-mode" id="focusPanel">
+      <div class="focus-progress" id="focusProgress">Élève 1 / 1</div>
+      <div class="focus-name" id="focusName">—</div>
+      <div class="focus-chips" id="focusChips"></div>
+      <div class="focus-actions">
+        <button class="btn btn-secondary" id="focusExitBtn">✕ Quitter le mode focus</button>
+        <button class="btn btn-primary" id="focusNextBtn">Suivant →</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── MODAL AJOUT DE CLASSE (avec import des élèves) ── -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box wide">
+    <h3>Ajouter une classe</h3>
+    <div class="modal-sub">Le nom est proposé automatiquement, vous pouvez le modifier.</div>
+    <input type="text" id="newClassName" placeholder="ex: 1AC1">
+
+    <div class="import-divider">Élèves de la classe</div>
+
+    <textarea id="studentsTextarea" placeholder="Un nom par ligne, ex:&#10;Ahmed Bennani&#10;Yasmine El Amrani&#10;..."></textarea>
+    <div class="import-count" id="importCount" style="display:none;"></div>
+
+    <button class="btn btn-secondary btn-sm" id="importFileBtn" style="margin-bottom:16px;">📄 Importer un fichier .txt</button>
+    <input type="file" id="studentsFileInput" accept=".txt" style="display:none;">
+    <div class="import-hint">Si aucun nom n'est saisi, une liste générique sera créée automatiquement.</div>
+
+    <div class="modal-actions">
+      <button class="btn btn-secondary btn-sm" id="cancelAdd">Annuler</button>
+      <button class="btn btn-green btn-sm" id="confirmAdd">✔ Valider</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── MODAL CONFIRMATION (suppression de classe, etc.) ── -->
+<div class="modal-overlay" id="confirmModalOverlay">
+  <div class="modal-box">
+    <h3 id="confirmModalTitle">Confirmer l'action</h3>
+    <div class="modal-sub" id="confirmModalText">Êtes-vous sûr ?</div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary btn-sm" id="confirmModalCancel">Annuler</button>
+      <button class="btn btn-danger btn-sm" id="confirmModalOk">🗑️ Supprimer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── MODAL MODIFIER LES ÉLÈVES (ajout / suppression) ── -->
+<div class="modal-overlay" id="editStudentsOverlay">
+  <div class="modal-box wide">
+    <h3>Modifier les élèves</h3>
+    <div class="modal-sub">Ajoutez un nouvel élève ou supprimez un élève qui a quitté la classe.</div>
+
+    <div class="roster-list" id="rosterEditList"></div>
+
+    <div class="import-divider">Ajouter un ou plusieurs élèves</div>
+    <textarea id="addStudentsTextarea" placeholder="Un nom par ligne, ex:&#10;Karim Idrissi&#10;..."></textarea>
+    <button class="btn btn-secondary btn-sm" id="addStudentsBtn" style="margin-top:10px;">✚ Ajouter à la liste</button>
+
+    <div class="modal-actions" style="margin-top:18px;">
+      <button class="btn btn-secondary btn-sm" id="closeEditStudents">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── Mode clair / sombre ──
+  const themeToggle = document.getElementById('themeToggle');
+  const html = document.documentElement;
+  function applyTheme(theme) {
+    if (theme === 'light') { html.classList.add('light-mode'); themeToggle.textContent = '☀️'; }
+    else { html.classList.remove('light-mode'); themeToggle.textContent = '🌙'; }
+  }
+  applyTheme(localStorage.getItem('journal-theme') || 'dark');
+  themeToggle.addEventListener('click', () => {
+    const isLight = html.classList.contains('light-mode');
+    const next = isLight ? 'dark' : 'light';
+    applyTheme(next);
+    localStorage.setItem('journal-theme', next);
+  });
+
+  // ── Modal de confirmation générique (remplace window.confirm) ──
+  const confirmModalOverlay = document.getElementById('confirmModalOverlay');
+  const confirmModalTitle = document.getElementById('confirmModalTitle');
+  const confirmModalText = document.getElementById('confirmModalText');
+  const confirmModalOk = document.getElementById('confirmModalOk');
+  const confirmModalCancel = document.getElementById('confirmModalCancel');
+  let confirmModalCallback = null;
+
+  function openConfirmModal({ title, text, okLabel = '🗑️ Supprimer', onConfirm }) {
+    confirmModalTitle.textContent = title;
+    confirmModalText.textContent = text;
+    confirmModalOk.textContent = okLabel;
+    confirmModalCallback = onConfirm;
+    confirmModalOverlay.classList.add('active');
+  }
+  function closeConfirmModal() {
+    confirmModalOverlay.classList.remove('active');
+    confirmModalCallback = null;
+  }
+  confirmModalCancel.addEventListener('click', closeConfirmModal);
+  confirmModalOverlay.addEventListener('click', (e) => { if (e.target === confirmModalOverlay) closeConfirmModal(); });
+  confirmModalOk.addEventListener('click', () => {
+    const cb = confirmModalCallback;
+    closeConfirmModal();
+    if (cb) cb();
+  });
+
+  // ── Données des niveaux ──
+  const LEVELS = [
+    { code: '1AC',  name: '1ère Année Collège' },
+    { code: '2AC',  name: '2ème Année Collège' },
+    { code: '3AC',  name: '3ème Année Collège' },
+    { code: 'TC',   name: 'Tronc Commun' },
+    { code: '1BAC', name: '1ère Année Bac' },
+    { code: '2BAC', name: '2ème Année Bac' },
+  ];
+
+  // classes[levelCode] = [ 'nom1', 'nom2', ... ]
+  const classes = {};
+  LEVELS.forEach(l => classes[l.code] = []);
+
+  // classStudentsData[classKey] = ['Nom 1', 'Nom 2', ...] (liste importée/saisie à la création)
+  const classStudentsData = {};
+
+  // lessons[classKey] = [ { number, date, present, absent }, ... ] triées par numéro
+  const lessons = {};
+
+  let currentLevel = null;
+
+  // ── Rendu de la grille des niveaux ──
+  const levelGrid = document.getElementById('levelGrid');
+  function renderLevelGrid() {
+    levelGrid.innerHTML = '';
+    LEVELS.forEach(l => {
+      const card = document.createElement('div');
+      card.className = 'level-card';
+      card.innerHTML = `
+        <div class="level-code">${l.code}</div>
+        <div class="level-name">${l.name}</div>
+        <div class="level-count">${classes[l.code].length} classe(s)</div>
+      `;
+      card.addEventListener('click', () => openLevel(l.code));
+      levelGrid.appendChild(card);
+    });
+  }
+  renderLevelGrid();
+
+  // ── Navigation entre vues ──
+  const viewHome = document.getElementById('view-home');
+  const viewClasses = document.getElementById('view-classes');
+  document.getElementById('backBtn').addEventListener('click', () => {
+    viewClasses.classList.remove('active');
+    viewHome.classList.add('active');
+    renderLevelGrid();
+  });
+
+  function openLevel(code) {
+    currentLevel = code;
+    const level = LEVELS.find(l => l.code === code);
+    document.getElementById('crumbCurrent').textContent = level.code;
+    document.getElementById('levelTitle').textContent = level.name;
+    document.getElementById('levelSub').textContent = `Gestion des classes — niveau ${level.code}`;
+    document.getElementById('statLevel').textContent = level.code;
+    viewHome.classList.remove('active');
+    viewClasses.classList.add('active');
+    renderClasses();
+  }
+
+  // ── Rendu des classes d'un niveau ──
+  const classGrid = document.getElementById('classGrid');
+  const emptyState = document.getElementById('emptyState');
+
+  function nextClassName(code) {
+    const n = classes[code].length + 1;
+    return `${code}${n}`;
+  }
+
+  function renderClasses() {
+    const list = classes[currentLevel];
+    classGrid.innerHTML = '';
+    emptyState.style.display = list.length === 0 ? 'block' : 'none';
+
+    list.forEach((name, idx) => {
+      const item = document.createElement('div');
+      item.className = 'class-list-item';
+      item.innerHTML = `
+        <div class="class-list-main">
+          <div class="class-name">${name}</div>
+          <div class="class-meta">Classe #${idx + 1} · 📚 Cliquer pour les leçons</div>
+        </div>
+        <span class="class-list-arrow">→</span>
+      `;
+      item.addEventListener('click', () => openLessonsView(name));
+      classGrid.appendChild(item);
+    });
+
+    document.getElementById('statCount').textContent = list.length;
+  }
+
+  // ── Modal d'ajout ──
+  const modalOverlay = document.getElementById('modalOverlay');
+  const newClassInput = document.getElementById('newClassName');
+  const studentsTextarea = document.getElementById('studentsTextarea');
+  const importCount = document.getElementById('importCount');
+  const studentsFileInput = document.getElementById('studentsFileInput');
+
+  function openModal() {
+    newClassInput.value = nextClassName(currentLevel);
+    studentsTextarea.value = '';
+    importCount.style.display = 'none';
+    newClassInput.style.borderColor = '';
+    modalOverlay.classList.add('active');
+    setTimeout(() => newClassInput.focus(), 50);
+  }
+  function closeModal() { modalOverlay.classList.remove('active'); }
+
+  document.getElementById('openAddModal').addEventListener('click', openModal);
+  document.getElementById('cancelAdd').addEventListener('click', closeModal);
+  modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+
+  document.getElementById('confirmAdd').addEventListener('click', addClass);
+  newClassInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') addClass(); });
+
+  function parsedStudentNames() {
+    return studentsTextarea.value
+      .split('\n')
+      .map(s => s.trim())
+      .filter(s => s.length > 0);
+  }
+
+  studentsTextarea.addEventListener('input', () => {
+    const n = parsedStudentNames().length;
+    if (n > 0) {
+      importCount.style.display = 'block';
+      importCount.textContent = `${n} élève(s) détecté(s)`;
+    } else {
+      importCount.style.display = 'none';
+    }
+  });
+
+  document.getElementById('importFileBtn').addEventListener('click', () => studentsFileInput.click());
+  studentsFileInput.addEventListener('change', () => {
+    const file = studentsFileInput.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      studentsTextarea.value = e.target.result;
+      studentsTextarea.dispatchEvent(new Event('input'));
+    };
+    reader.readAsText(file, 'UTF-8');
+    studentsFileInput.value = '';
+  });
+
+  function addClass() {
+    const name = newClassInput.value.trim();
+    if (!name) return;
+    if (classes[currentLevel].includes(name)) {
+      newClassInput.style.borderColor = 'var(--clr-red)';
+      return;
+    }
+    classes[currentLevel].push(name);
+    const names = parsedStudentNames();
+    if (names.length > 0) {
+      classStudentsData[classKey(name)] = names;
+    }
+    closeModal();
+    renderClasses();
+  }
+
+  // ══════════════════════════════════════════
+  // ── GESTION DES PRÉSENCES ──
+  // ══════════════════════════════════════════
+
+  const STATUSES = ['Présent', 'Absent', 'Dispensé', 'Sans tenue', 'Malade'];
+  const DEFAULT_STATUS = 'Présent';
+  const ROSTER_SIZE = 28;
+
+  // rosters[classKey] = ['Élève 01', 'Élève 02', ...]
+  const rosters = {};
+  // attendance[classKey][sessionNumber] = { studentName: status }
+  const attendance = {};
+  // dispensePresence[classKey][sessionNumber] = { studentName: 'Présent' | 'Absent' }
+  // Sous-choix affiché uniquement quand le statut de l'élève est "Dispensé".
+  const dispensePresence = {};
+  // studentDefaults[classKey][studentName] = 'Dispensé' (statut permanent tant qu'il n'est pas remis à Présent)
+  const studentDefaults = {};
+
+  function classKey(className) { return `${currentLevel}__${className}`; }
+
+  function getStudentDefault(key, name) {
+    return (studentDefaults[key] && studentDefaults[key][name]) || null;
+  }
+  function setStudentDefault(key, name, value) {
+    if (!studentDefaults[key]) studentDefaults[key] = {};
+    if (value) studentDefaults[key][name] = value;
+    else delete studentDefaults[key][name];
+  }
+
+  function getDispensePresence(key, session, name) {
+    return (dispensePresence[key] && dispensePresence[key][session] && dispensePresence[key][session][name]) || 'Présent';
+  }
+  function setDispensePresence(key, session, name, value) {
+    if (!dispensePresence[key]) dispensePresence[key] = {};
+    if (!dispensePresence[key][session]) dispensePresence[key][session] = {};
+    dispensePresence[key][session][name] = value;
+  }
+
+  function getRoster(key) {
+    if (!rosters[key]) {
+      if (classStudentsData[key] && classStudentsData[key].length > 0) {
+        rosters[key] = classStudentsData[key].slice();
+      } else {
+        rosters[key] = Array.from({ length: ROSTER_SIZE }, (_, i) =>
+          `Élève ${String(i + 1).padStart(2, '0')}`
+        );
+      }
+    }
+    return rosters[key];
+  }
+
+  function getSessionData(key, session) {
+    if (!attendance[key]) attendance[key] = {};
+    if (!attendance[key][session]) {
+      const roster = getRoster(key);
+      const initial = {};
+      roster.forEach((name) => {
+        initial[name] = getStudentDefault(key, name) || DEFAULT_STATUS;
+      });
+      attendance[key][session] = initial;
+    }
+    return attendance[key][session];
+  }
+
+  // Statut d'assiduité "réel" d'un élève pour les statistiques : si l'élève
+  // est Dispensé, on se base sur son sous-choix Présent/Absent ; sinon sur
+  // son statut direct.
+  function effectiveAttendance(key, session, name, status) {
+    return status === 'Dispensé' ? getDispensePresence(key, session, name) : status;
+  }
+
+  let currentClassName = null;
+  let currentClassKey = null;
+  let currentSession = null;
+  let focusIndex = 0;
+  let hasUnsavedChanges = false;
+
+  // ══════════════════════════════════════════
+  // ── VUE HISTORIQUE DES LEÇONS D'UNE CLASSE ──
+  // ══════════════════════════════════════════
+
+  const viewLessons = document.getElementById('view-lessons');
+  const lessonsTbody = document.getElementById('lessonsTbody');
+  const lessonsEmptyState = document.getElementById('lessonsEmptyState');
+
+  function getLessons(key) {
+    if (!lessons[key]) lessons[key] = [];
+    return lessons[key];
+  }
+
+  function nextLessonNumber(key) {
+    const list = getLessons(key);
+    if (list.length === 0) return 1;
+    return Math.max(...list.map(l => l.number)) + 1;
+  }
+
+  function openLessonsView(className) {
+    currentClassName = className;
+    currentClassKey = classKey(className);
+    document.getElementById('crumbLevelLessons').textContent = currentLevel;
+    document.getElementById('crumbClassLessons').textContent = className;
+    document.getElementById('lessonsClassTitle').textContent = className;
+    viewClasses.classList.remove('active');
+    viewLessons.classList.add('active');
+    renderLessonsTable();
+  }
+
+  function renderLessonsTable() {
+    const list = getLessons(currentClassKey).slice().sort((a, b) => a.number - b.number);
+    lessonsTbody.innerHTML = '';
+    lessonsEmptyState.style.display = list.length === 0 ? 'block' : 'none';
+
+    list.forEach(lesson => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="lesson-row-num">${lesson.number}</td>
+        <td class="lesson-row-date">${lesson.date}</td>
+        <td><span class="status-pill st-Présent">${lesson.present}</span></td>
+        <td><span class="status-pill st-Absent">${lesson.absent}</span></td>
+        <td><button class="btn btn-secondary lesson-open-btn" data-num="${lesson.number}">Ouvrir →</button></td>
+      `;
+      tr.querySelector('.lesson-open-btn').addEventListener('click', () => {
+        currentSession = lesson.number;
+        openAttendanceView();
+      });
+      lessonsTbody.appendChild(tr);
+    });
+  }
+
+  document.getElementById('backToClassesFromLessonsBtn').addEventListener('click', () => {
+    viewLessons.classList.remove('active');
+    viewClasses.classList.add('active');
+    renderClasses();
+  });
+
+  document.getElementById('newLessonBtn').addEventListener('click', () => {
+    currentSession = nextLessonNumber(currentClassKey);
+    openAttendanceView();
+  });
+
+  // ── Suppression de la classe (depuis la vue leçon) ──
+  document.getElementById('deleteClassBtn').addEventListener('click', () => {
+    openConfirmModal({
+      title: 'Supprimer la classe',
+      text: `Supprimer définitivement la classe "${currentClassName}" et toutes ses leçons enregistrées ? Cette action est irréversible.`,
+      okLabel: '🗑️ Supprimer',
+      onConfirm: () => {
+        const idx = classes[currentLevel].indexOf(currentClassName);
+        if (idx !== -1) classes[currentLevel].splice(idx, 1);
+        delete classStudentsData[currentClassKey];
+        delete lessons[currentClassKey];
+        delete rosters[currentClassKey];
+
+        viewAttendance.classList.remove('active');
+        viewLessons.classList.remove('active');
+        viewClasses.classList.add('active');
+        renderClasses();
+      }
+    });
+  });
+
+  // ── Vue Présences ──
+  const viewAttendance = document.getElementById('view-attendance');
+  const tablePanel = document.getElementById('tablePanel');
+  const focusPanel = document.getElementById('focusPanel');
+
+  document.getElementById('backToClassesBtn').addEventListener('click', () => {
+    leaveAttendanceView();
+  });
+
+  function leaveAttendanceView() {
+    if (hasUnsavedChanges) {
+      openConfirmModal({
+        title: 'Modifications non sauvegardées',
+        text: `Vous avez des changements dans la Leçon ${currentSession} qui n'ont pas été sauvegardés. Si vous quittez maintenant, ils seront perdus.`,
+        okLabel: '⚠️ Quitter sans sauvegarder',
+        onConfirm: () => {
+          hasUnsavedChanges = false;
+          viewAttendance.classList.remove('active');
+          viewLessons.classList.add('active');
+          renderLessonsTable();
+        }
+      });
+    } else {
+      viewAttendance.classList.remove('active');
+      viewLessons.classList.add('active');
+      renderLessonsTable();
+    }
+  }
+
+  window.addEventListener('beforeunload', (e) => {
+    if (hasUnsavedChanges) {
+      e.preventDefault();
+      e.returnValue = '';
+    }
+  });
+
+  function openAttendanceView() {
+    document.getElementById('crumbLevelAtt').textContent = currentLevel;
+    document.getElementById('crumbClassAtt2').textContent = currentClassName;
+    document.getElementById('crumbClassAtt').textContent = `Leçon ${currentSession}`;
+    document.getElementById('attClassTitle').textContent = currentClassName;
+    document.getElementById('sessionTag').textContent = `Leçon ${currentSession}`;
+
+    const existing = getLessons(currentClassKey).find(l => l.number === currentSession);
+    document.getElementById('attDateSub').textContent = existing
+      ? `Leçon enregistrée le ${existing.date}`
+      : `Nouvelle leçon — sera datée du jour à la sauvegarde`;
+
+    hasUnsavedChanges = false;
+    exitFocusMode(false);
+    viewClasses.classList.remove('active');
+    viewLessons.classList.remove('active');
+    viewAttendance.classList.add('active');
+    renderAttendanceTable();
+  }
+
+  // ── Sauvegarde de la leçon ──
+  document.getElementById('saveLessonBtn').addEventListener('click', saveLesson);
+
+  function todayLabel() {
+    return new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  }
+
+  function saveLesson() {
+    const data = getSessionData(currentClassKey, currentSession);
+    let present = 0, absent = 0;
+    Object.keys(data).forEach((name) => {
+      const eff = effectiveAttendance(currentClassKey, currentSession, name, data[name]);
+      if (eff === 'Présent') present++;
+      else if (eff === 'Absent') absent++;
+    });
+
+    const list = getLessons(currentClassKey);
+    const existing = list.find(l => l.number === currentSession);
+    const date = existing ? existing.date : todayLabel();
+
+    if (existing) {
+      existing.date = date;
+      existing.present = present;
+      existing.absent = absent;
+    } else {
+      list.push({ number: currentSession, date, present, absent });
+    }
+
+    hasUnsavedChanges = false;
+    document.getElementById('attDateSub').textContent = `Leçon enregistrée le ${date}`;
+
+    const saveBtn = document.getElementById('saveLessonBtn');
+    const original = saveBtn.textContent;
+    saveBtn.textContent = '✔ Enregistré';
+    setTimeout(() => { saveBtn.textContent = original; }, 1200);
+  }
+
+  function statusClass(status) { return 'st-' + status.replace(/\s+/g, '_'); }
+
+  // ── Changement de statut d'un élève (table + mode focus) ──
+  // Si l'élève est marqué "Dispensé" une fois, ce statut devient son défaut
+  // permanent : à chaque nouvelle leçon il démarre en "Dispensé". Cliquer sur
+  // "Présent" (statut principal) annule ce défaut définitivement.
+  // Tous les statuts restent toujours disponibles ; quand le statut est
+  // "Dispensé", un sous-choix Présent/Absent précise s'il était là ou non.
+  function applyStatusChange(data, name, status) {
+    data[name] = status;
+    if (status === 'Dispensé') {
+      setStudentDefault(currentClassKey, name, 'Dispensé');
+    } else if (status === 'Présent' && getStudentDefault(currentClassKey, name) === 'Dispensé') {
+      setStudentDefault(currentClassKey, name, null);
+    }
+    hasUnsavedChanges = true;
+  }
+
+  function applyDispensePresenceChange(name, value) {
+    setDispensePresence(currentClassKey, currentSession, name, value);
+    hasUnsavedChanges = true;
+  }
+
+  function updateAttendanceStats() {
+    const roster = getRoster(currentClassKey);
+    const data = getSessionData(currentClassKey, currentSession);
+    let present = 0, absent = 0;
+    roster.forEach((name) => {
+      const eff = effectiveAttendance(currentClassKey, currentSession, name, data[name]);
+      if (eff === 'Présent') present++;
+      else if (eff === 'Absent') absent++;
+    });
+    document.getElementById('statTotal').textContent = roster.length;
+    document.getElementById('statPresent').textContent = present;
+    document.getElementById('statAbsent').textContent = absent;
+  }
+
+  const attendanceTbody = document.getElementById('attendanceTbody');
+
+  function renderAttendanceTable() {
+    const roster = getRoster(currentClassKey);
+    const data = getSessionData(currentClassKey, currentSession);
+
+    attendanceTbody.innerHTML = '';
+    roster.forEach((studentName, idx) => {
+      const tr = document.createElement('tr');
+      const currentStatus = data[studentName];
+
+      const chipsHtml = STATUSES.map(st => `
+        <button class="status-chip ${st === currentStatus ? 'active' : ''}" data-status="${st}" data-name="${studentName}">${st}</button>
+      `).join('');
+
+      let subRowHtml = '';
+      if (currentStatus === 'Dispensé') {
+        const currentAtt = getDispensePresence(currentClassKey, currentSession, studentName);
+        subRowHtml = `
+          <div class="dispense-subrow">
+            <span class="dispense-label">Dispensé — il était :</span>
+            <button class="dispense-chip ${currentAtt === 'Présent' ? 'active' : ''}" data-att="Présent" data-name="${studentName}">Présent</button>
+            <button class="dispense-chip ${currentAtt === 'Absent' ? 'active' : ''}" data-att="Absent" data-name="${studentName}">Absent</button>
+          </div>
+        `;
+      }
+
+      tr.innerHTML = `
+        <td class="idx-cell">${idx + 1}</td>
+        <td class="name-cell">${studentName}</td>
+        <td><div class="status-chips">${chipsHtml}</div>${subRowHtml}</td>
+      `;
+      attendanceTbody.appendChild(tr);
+    });
+
+    attendanceTbody.querySelectorAll('.status-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const name = chip.dataset.name;
+        const status = chip.dataset.status;
+        applyStatusChange(data, name, status);
+        renderAttendanceTable();
+        updateAttendanceStats();
+      });
+    });
+
+    attendanceTbody.querySelectorAll('.dispense-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        applyDispensePresenceChange(chip.dataset.name, chip.dataset.att);
+        renderAttendanceTable();
+        updateAttendanceStats();
+      });
+    });
+
+    updateAttendanceStats();
+  }
+
+  // ── Mode Focus (saisie un par un) ──
+  const focusProgress = document.getElementById('focusProgress');
+  const focusName = document.getElementById('focusName');
+  const focusChips = document.getElementById('focusChips');
+
+  document.getElementById('startFocusBtn').addEventListener('click', () => {
+    focusIndex = 0;
+    enterFocusMode();
+  });
+  document.getElementById('focusExitBtn').addEventListener('click', () => exitFocusMode(true));
+  document.getElementById('focusNextBtn').addEventListener('click', () => {
+    const roster = getRoster(currentClassKey);
+    if (focusIndex < roster.length - 1) {
+      focusIndex++;
+      renderFocusStudent();
+    } else {
+      exitFocusMode(true);
+    }
+  });
+
+  function enterFocusMode() {
+    tablePanel.style.display = 'none';
+    focusPanel.classList.add('active');
+    renderFocusStudent();
+  }
+
+  function exitFocusMode(refreshTable) {
+    focusPanel.classList.remove('active');
+    tablePanel.style.display = '';
+    if (refreshTable && currentClassKey) {
+      renderAttendanceTable();
+    }
+  }
+
+  function renderFocusStudent() {
+    const roster = getRoster(currentClassKey);
+    const data = getSessionData(currentClassKey, currentSession);
+    const studentName = roster[focusIndex];
+    const currentStatus = data[studentName];
+
+    focusProgress.textContent = `Élève ${focusIndex + 1} / ${roster.length}`;
+    focusName.textContent = studentName;
+
+    focusChips.innerHTML = STATUSES.map(st => `
+      <button class="status-chip focus-chip ${st === currentStatus ? 'active' : ''}" data-status="${st}">${st}</button>
+    `).join('');
+
+    if (currentStatus === 'Dispensé') {
+      const currentAtt = getDispensePresence(currentClassKey, currentSession, studentName);
+      focusChips.innerHTML += `
+        <div class="dispense-subrow">
+          <span class="dispense-label">Dispensé — il était :</span>
+          <button class="dispense-chip ${currentAtt === 'Présent' ? 'active' : ''}" data-att="Présent">Présent</button>
+          <button class="dispense-chip ${currentAtt === 'Absent' ? 'active' : ''}" data-att="Absent">Absent</button>
+        </div>
+      `;
+    }
+
+    focusChips.querySelectorAll('.status-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        applyStatusChange(data, studentName, chip.dataset.status);
+        updateAttendanceStats();
+        renderFocusStudent();
+      });
+    });
+
+    focusChips.querySelectorAll('.dispense-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        applyDispensePresenceChange(studentName, chip.dataset.att);
+        updateAttendanceStats();
+        renderFocusStudent();
+      });
+    });
+
+    const nextBtn = document.getElementById('focusNextBtn');
+    nextBtn.textContent = focusIndex < roster.length - 1 ? 'Suivant →' : '✔ Terminer';
+  }
+
+  // ══════════════════════════════════════════
+  // ── MODIFIER LES ÉLÈVES (ajout / suppression) ──
+  // ══════════════════════════════════════════
+
+  const editStudentsOverlay = document.getElementById('editStudentsOverlay');
+  const rosterEditList = document.getElementById('rosterEditList');
+  const addStudentsTextarea = document.getElementById('addStudentsTextarea');
+
+  document.getElementById('editStudentsBtn').addEventListener('click', openEditStudentsModal);
+  document.getElementById('closeEditStudents').addEventListener('click', closeEditStudentsModal);
+  editStudentsOverlay.addEventListener('click', (e) => { if (e.target === editStudentsOverlay) closeEditStudentsModal(); });
+
+  function openEditStudentsModal() {
+    addStudentsTextarea.value = '';
+    renderRosterEditList();
+    editStudentsOverlay.classList.add('active');
+  }
+  function closeEditStudentsModal() {
+    editStudentsOverlay.classList.remove('active');
+    // Le tableau de la leçon en cours peut avoir changé (élève ajouté/supprimé)
+    if (currentClassKey) renderLessonsTable();
+  }
+
+  function renderRosterEditList() {
+    const roster = getRoster(currentClassKey);
+    rosterEditList.innerHTML = '';
+
+    if (roster.length === 0) {
+      rosterEditList.innerHTML = `<div class="roster-empty">Aucun élève dans cette classe pour le moment.</div>`;
+      return;
+    }
+
+    roster.forEach((name) => {
+      const row = document.createElement('div');
+      row.className = 'roster-list-item';
+      row.innerHTML = `
+        <span class="roster-name">${name}</span>
+        <button class="class-remove" title="Supprimer cet élève">✕</button>
+      `;
+      row.querySelector('.class-remove').addEventListener('click', () => {
+        openConfirmModal({
+          title: 'Retirer cet élève',
+          text: `Retirer "${name}" de la classe "${currentClassName}" ? Son historique de présence déjà sauvegardé sera conservé, mais il n'apparaîtra plus dans les prochaines leçons.`,
+          okLabel: '🗑️ Retirer',
+          onConfirm: () => {
+            const idx = roster.indexOf(name);
+            if (idx !== -1) roster.splice(idx, 1);
+            classStudentsData[currentClassKey] = roster.slice();
+            setStudentDefault(currentClassKey, name, null);
+            renderRosterEditList();
+          }
+        });
+      });
+      rosterEditList.appendChild(row);
+    });
+  }
+
+  document.getElementById('addStudentsBtn').addEventListener('click', () => {
+    const names = addStudentsTextarea.value
+      .split('\n')
+      .map(n => n.trim())
+      .filter(n => n.length > 0);
+
+    if (names.length === 0) return;
+
+    const roster = getRoster(currentClassKey);
+    names.forEach(name => {
+      if (!roster.includes(name)) roster.push(name);
+    });
+    classStudentsData[currentClassKey] = roster.slice();
+
+    addStudentsTextarea.value = '';
+    renderRosterEditList();
+  });
+
+  // ══════════════════════════════════════════
+  // ── IMPRESSION DE LA FICHE DE SUIVI (10 à 12 séances) ──
+  // ══════════════════════════════════════════
+
+  const STATUS_CODE = {
+    'Présent': 'P',
+    'Absent': 'AB',
+    'Dispensé': 'D',
+    'Sans tenue': 'ST',
+    'Malade': 'M'
+  };
+  // Couleurs par statut (imprimées grâce à print-color-adjust)
+  const STATUS_PRINT_COLOR = {
+    'Présent': '#c8f0d8',
+    'Absent': '#f7c8c6',
+    'Sans tenue': '#fbdcb8',
+    'Malade': '#faf0b0',
+    'Dispensé': '#cfe0f7'
+  };
+
+  document.getElementById('printSheetBtn').addEventListener('click', printClassSheet);
+
+  function buildSessionLabels(count) {
+    const labels = [];
+    for (let i = 0; i < count; i++) {
+      if (i === 0) labels.push('TO');
+      else if (i === count - 1) labels.push('TB');
+      else labels.push(`S${i + 1}`);
+    }
+    return labels;
+  }
+
+  function printClassSheet() {
+    const roster = getRoster(currentClassKey);
+    const savedNumbers = getLessons(currentClassKey).map(l => l.number);
+    const highest = savedNumbers.length ? Math.max(...savedNumbers) : 0;
+    const sessionCount = Math.min(12, Math.max(10, highest));
+    const labels = buildSessionLabels(sessionCount);
+    const savedSet = new Set(savedNumbers);
+
+    // Taille adaptée au nombre d'élèves pour tenir sur une seule page A4 paysage
+    let rowPad = '5px 6px', fontSize = '11px', headerFontSize = '11px';
+    if (roster.length > 45) { rowPad = '2px 4px'; fontSize = '8px'; headerFontSize = '9px'; }
+    else if (roster.length > 35) { rowPad = '3px 4px'; fontSize = '9px'; headerFontSize = '10px'; }
+    else if (roster.length > 25) { rowPad = '4px 5px'; fontSize = '10px'; headerFontSize = '10px'; }
+
+    const rowsHtml = roster.map((name, idx) => {
+      const cells = labels.map((_, i) => {
+        const sessionNum = i + 1;
+        if (!savedSet.has(sessionNum)) return '<td></td>';
+        const sessionData = attendance[currentClassKey] && attendance[currentClassKey][sessionNum];
+        const status = sessionData ? sessionData[name] : undefined;
+        if (!status) return '<td></td>';
+        const code = STATUS_CODE[status] || '';
+        const bg = STATUS_PRINT_COLOR[status] || '';
+        return `<td style="background:${bg};">${code}</td>`;
+      }).join('');
+      return `<tr><td class="pnum">${idx + 1}</td><td class="pname">${name}</td>${cells}</tr>`;
+    }).join('');
+
+    const headCells = labels.map(l => `<th>${l}</th>`).join('');
+
+    const printArea = document.getElementById('printArea');
+    printArea.innerHTML = `
+      <style>
+        #printArea table { width: 100%; border-collapse: collapse; font-size: ${fontSize}; }
+        #printArea th, #printArea td { border: 1px solid #333; padding: ${rowPad}; text-align: center; }
+        #printArea th { background: #eee; font-weight: 700; font-size: ${headerFontSize}; }
+        #printArea td.pname { text-align: left; white-space: nowrap; font-weight: 600; }
+        #printArea td.pnum { width: 24px; }
+      </style>
+      <div style="margin-bottom:10px;">
+        <h1 style="font-size:16px; margin:0;">Classe : ${currentClassName}</h1>
+        <div style="font-size:11px; color:#444; margin-top:3px;">Fiche de suivi des présences — ${sessionCount} séances</div>
+      </div>
+      <div style="font-size:10px; color:#333; margin-bottom:8px;">
+        <span style="background:${STATUS_PRINT_COLOR['Présent']}; padding:1px 5px; border-radius:3px;">P = Présent</span>
+        &nbsp;·&nbsp;
+        <span style="background:${STATUS_PRINT_COLOR['Absent']}; padding:1px 5px; border-radius:3px;">AB = Absent</span>
+        &nbsp;·&nbsp;
+        <span style="background:${STATUS_PRINT_COLOR['Sans tenue']}; padding:1px 5px; border-radius:3px;">ST = Sans tenue</span>
+        &nbsp;·&nbsp;
+        <span style="background:${STATUS_PRINT_COLOR['Malade']}; padding:1px 5px; border-radius:3px;">M = Malade</span>
+        &nbsp;·&nbsp;
+        <span style="background:${STATUS_PRINT_COLOR['Dispensé']}; padding:1px 5px; border-radius:3px;">D = Dispensé</span>
+      </div>
+      <table>
+        <thead><tr><th>N°</th><th>Nom et prénom</th>${headCells}</tr></thead>
+        <tbody>${rowsHtml}</tbody>
+      </table>
+    `;
+
+    document.body.classList.add('is-printing');
+    window.print();
+  }
+
+  window.addEventListener('afterprint', () => {
+    document.body.classList.remove('is-printing');
+  });
+</script>
+
+</body>
+</html>
